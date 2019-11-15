@@ -58,18 +58,28 @@
     <audio data-key="76" src="sounds/tink.wav"></audio>
 
     <script>
-        document.addEventListener("keydown", (event) => {
+        // Takes the provided keydown event, identifies the key, and if it is associated with a sound,
+        // it plays the sound, and adds an annimation to the associated div on the screen.
+        function action(event) {
             const audio = document.querySelector(`audio[data-key='${event.keyCode}']`);
             if (!audio) return;
-            audio.currentTime = 0;
             audio.play();
+            audio.currentTime = 0;
             document.querySelector(`div[data-key='${event.keyCode}']`).classList.add("playing");
-            setTimeout(function () {
-                document.querySelector(`div[data-key='${event.keyCode}']`).classList.remove("playing");
-            }, 100);
-        });
+        };
+
+        // Takes the provided end of transition event, and starts the animation back to normal state.
+        function removeTransition(event) {
+            if (event.propertyName == "transform");
+            this.classList.remove("playing");
+        };
+
+        // Adds an eventlistener for any key presses, runs the action event for the given key.
+        document.addEventListener("keydown", action);
+        // Creates a collection of all the key divs.
+        keys = document.querySelectorAll('.key');
+        // Adds an eventlistener for end of transition to each key, and calls removeTransition upon being triggered.
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
     </script>
-
-
 </body>
 </html>
