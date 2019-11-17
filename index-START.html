@@ -58,14 +58,17 @@
 
     .hand {
       width: 50%;
-      background: black;
       position: absolute;
-      top: 50%;
+      top: 49%;
       -webkit-transform: translate(0, -50%);
+      transform-origin: 100% 50%;
+      height: 6px;
+      transform: rotate(90deg);
     }
 
     .center {
-      background: rgba(0,0,0,.5);
+      background: rgba(0,0,0,1);
+      background: rgba(0,0,0,1);
       width: 8px;
       height: 8px;
       top: 50%;
@@ -76,39 +79,36 @@
     }
 
     .min-hand {
-      height: 4px;
-      transform-origin: 100% 50%;
-      background-color: yellow;
+      background: rgba(0,0,0,.7);
+
     }
 
     .second-hand {
-      height: 2px;
-      transform-origin: 100% 50%;
-      background-color: pink;
+      background: rgba(0,0,0,.4);
+
     }
 
     .hour-hand {
-      height: 6px;
-      transform-origin: 100% 50%;
-      background-color: green;
+      background: rgba(0,0,0,1);
+
     }
 
   </style>
 
   <script>
-    const time = new Date()
-    console.log(time.getHours())
-    console.log(time.getMinutes())
-    console.log(time.getSeconds())
-    const secRotate = (90 + (time.getSeconds() * 6)) % 360
-    const minRotate = (90 + (time.getMinutes() * 6) + (secRotate / 60)) % 360
-    const hourRotate = (90 + (time.getHours() * 30) + (minRotate / 12)) % 360
-    console.log(hourRotate)
-    console.log(minRotate)
-    console.log(secRotate)
-    document.querySelector(".second-hand").style.transform = `rotate(${secRotate}deg)`
-    document.querySelector(".min-hand").style.transform = `rotate(${minRotate}deg)`
-    document.querySelector(".hour-hand").style.transform = `rotate(${hourRotate}deg)`
+    const updateClock = () => {
+      const time = new Date()
+      const secRotate = (90 + (time.getSeconds() * 6)) % 360
+      const minRotate = (90 + (time.getMinutes() * 6) + (secRotate / 60)) % 360
+      const hourRotate = (90 + (time.getHours() * 30) + (minRotate / 12)) % 360
+      document.querySelector(".second-hand").style.transform = `rotate(${secRotate}deg)`
+      document.querySelector(".min-hand").style.transform = `rotate(${minRotate}deg)`
+      document.querySelector(".hour-hand").style.transform = `rotate(${hourRotate}deg)`
+    }
+
+    setInterval(function() {
+        updateClock()
+    }, 1000);
 
   </script>
 </body>
