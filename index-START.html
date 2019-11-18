@@ -12,7 +12,7 @@
 
     // makes console.Log permanent and realtime in chrome
     function conLog(x) {
-      console.log(JSON.parse(JSON.stringify(x)))
+      console.table(JSON.parse(JSON.stringify(x)))
     }
 
     // Some data we can work with
@@ -57,15 +57,16 @@
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
-    inventors.forEach(function (inventor) {
-      inventor.age = inventor.passed - inventor.year;
-    });
+    const fourth = inventors.reduce(function(count, inventor) {
+      return count += inventor.passed - inventor.year;
+    }, 0);
     conLog("4. How many years did all the inventors live?");
-    conLog(inventors);
+    console.log(fourth);
 
     // 5. Sort the inventors by years lived
     inventors.sort(function(a, b) {
-      if (a.age == b.age) return 0;
+      a.age = a.passed - a.year;
+      b.age = b.passed - b.year;
       return a.age > b.age ? 1 : -1;
     });
     conLog("5. Sort the inventors by years lived");
