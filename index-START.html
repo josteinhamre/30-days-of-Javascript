@@ -10,6 +10,11 @@
     // Get your shorts on - this is an array workout!
     // ## Array Cardio Day 1
 
+    // makes console.Log permanent and realtime in chrome
+    function conLog(x) {
+      console.log(JSON.parse(JSON.stringify(x)))
+    }
+
     // Some data we can work with
 
     const inventors = [
@@ -31,28 +36,69 @@
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const first = inventors.filter(inventor => inventor.year >= 1500 && inventor.year < 1600);
+    conLog("1. Filter the list of inventors for those who were born in the 1500's");
+    conLog(first);
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors' first and last names
+    const second = inventors.map(inventor => `${inventor.first} ${inventor.last}`);
+    conLog("2. Give us an array of the inventors' first and last names");
+    conLog(second);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    inventors.sort(function(a, b) {
+      if (a.year == b.year) return 0;
+      return a.year > b.year ? 1 : -1;
+    });
+    conLog("3. Sort the inventors by birthdate, oldest to youngest");
+    conLog(inventors);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
+    inventors.forEach(function (inventor) {
+      inventor.age = inventor.passed - inventor.year;
+    });
+    conLog("4. How many years did all the inventors live?");
+    conLog(inventors);
 
     // 5. Sort the inventors by years lived
+    inventors.sort(function(a, b) {
+      if (a.age == b.age) return 0;
+      return a.age > b.age ? 1 : -1;
+    });
+    conLog("5. Sort the inventors by years lived");
+    conLog(inventors);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    // conLog("6. create a list of Boulevards in Paris that contain 'de' anywhere in the name");
+
+    // const boulevards = document.querySelectorAll('.mw-category-group li a');
+    // const boulevards_array = Array.from(boulevards);
+    // boulevards_array.filter(element => element.innerText.includes(' de '));
 
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    people.sort(function(a, b) {
+      a_array = a.split(' ');
+      b_array = b.split(' ');
+      return a_array[1].localeCompare(b_array[1]);
+    });
+    conLog("7. Sort the people alphabetically by last name");
+    conLog(people);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const counts = {};
+    data.forEach((key) => {
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    conLog("8. Sum up the instances of each of these");
+    conLog(counts);
 
   </script>
 </body>
