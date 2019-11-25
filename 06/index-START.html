@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+
+// Fetches the jason of cities, and adds them to an array
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+const cities = []
+fetch(endpoint)
+.then(blob => blob.json())
+.then(data => cities.push(...data))
+
+// Identifies the searchfield and result list
+const search = document.querySelector(".search")
+const list = document.querySelector(".suggestions")
+
+
+function autoComplete() {
+  list.innerHTML = "" // Clears previous search results
+  const regEx = new RegExp(search.value, "ig"); // Creates regex of current search value
+  cities.forEach((city) => { // Iterates over cities
+    if (city.city.match(regEx) || city.state.match(regEx)) { // Determines if city is a match
+      const city_f = `${city.city.replace(regEx, `<span class="hl">$&</span>`)}` // Creates a highlighted HTML string for city
+      const state_f = `${city.state.replace(regEx, `<span class="hl">$&</span>`)}` // Creates a highlighted HTML string for state
+      const population_f = `${city.population.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}` // Adds thousand separators to the population number
+      list.insertAdjacentHTML("beforeend", `<li><span>${city_f}, ${state_f}</span><span class="population">${population_f}</span></li>`) // Adds the city to the result list
+    }
+  })
+}
+
+// Adds eventlisteners to the searchfield. 
+search.addEventListener("change", autoComplete)
+search.addEventListener("keyup", autoComplete)
+
+
+
+
+</script>
+</body>
+</html>
