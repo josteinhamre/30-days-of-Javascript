@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<div class="controls">
+  <div>
+    <label for="size">Size:</label>
+    <input id="size" type="range" name="size" min="1" max="130" value="50">
+  </div>
+  <div>
+    <label for="color">Color</label>
+    <input id="color" type="color" name="color" value="#ff1111">
+  </div>
+</div>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+
+// Grabs relevant elements from the DOM
+const size = document.querySelector('#size');
+const color = document.querySelector('#color');
+const canvas = document.querySelector('#draw');
+const ctx = canvas.getContext('2d');
+
+// Adds listeners to the size and color inputs
+size.addEventListener('change', () => ctx.lineWidth = size.value);
+color.addEventListener('change', () => ctx.strokeStyle = color.value);
+
+// Sets the size of the canvas based on the window size
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight - 34;
+
+// Defines some default values for the canvas ctx
+ctx.lineJoin = 'round';
+ctx.lineCap = 'round';
+ctx.strokeStyle = color.value;
+ctx.lineWidth = size.value;
+
+// Creates 3 variables, to be used further down
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+
+// Takes a mousemove event, and create a path based on the movement, adds a stroke to the path.
+function draw(e) {
+  if (!isDrawing) return;
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(e.offsetX, e.offsetY); 
+  ctx.stroke();
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+}
+
+// Adds eventlisteners to the mouse events.
+canvas.addEventListener('mousedown', (e) => {
+  isDrawing = true;
+  [lastX, lastY] = [e.offsetX, e.offsetY];
+});
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', () => isDrawing = false);
+canvas.addEventListener('mouseout', () => isDrawing = false);
+  
+
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+
+  .controls {
+    width: 50%;
+    margin: 0 auto;
+    height: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+</style>
+
+</body>
+</html>
