@@ -7,40 +7,40 @@ const player_buttons = document.querySelectorAll('[data-skip]');
 
 function togglePlay() {
     video.paused ? video.play() : video.pause() ;
-}
+};
 
 function toggleButton() {
         toggle.innerHTML = video.paused ? "►" :"❚ ❚" ;
-}
+};
 
 function updateProgress() {
     progress_filled.style.flexBasis = `${(video.currentTime / video.duration) * 100}%`;
-}
+};
 
 function jumpPlayhead(e) {
     if (e.buttons || e.type === "click") {
-        video.currentTime = ((video.duration / 100) * ((e.offsetX / progress.clientWidth) * 100))
-    }
-}
+        video.currentTime = ((video.duration / 100) * ((e.offsetX / progress.clientWidth) * 100));
+    };
+};
 
 function rangeChange(e) {
     video[this.name] = this.value;
-}
+};
 
 function skipTo() {
     video.currentTime += parseFloat(this.dataset.skip);
-}
+};
 
-toggle.addEventListener('click', togglePlay)
-video.addEventListener('click', togglePlay)
-video.addEventListener('play', toggleButton)
-video.addEventListener('pause', toggleButton)
-video.addEventListener('timeupdate', updateProgress)
-progress.addEventListener('click', jumpPlayhead)
-progress.addEventListener('mousemove', jumpPlayhead)
+toggle.addEventListener('click', togglePlay);
+video.addEventListener('click', togglePlay);
+video.addEventListener('play', toggleButton);
+video.addEventListener('pause', toggleButton);
+video.addEventListener('timeupdate', updateProgress);
+progress.addEventListener('click', jumpPlayhead);
+progress.addEventListener('mousemove', jumpPlayhead);
 player_ranges.forEach((range) => {
-    range.addEventListener('change', rangeChange)
-})
+    range.addEventListener('change', rangeChange);
+});
 player_buttons.forEach((button) => {
-    button.addEventListener('click', skipTo)
-})
+    button.addEventListener('click', skipTo);
+});
