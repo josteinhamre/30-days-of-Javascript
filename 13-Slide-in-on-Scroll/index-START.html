@@ -58,6 +58,23 @@
       };
     }
 
+    const images = document.querySelectorAll('.slide-in');
+
+    function checkImages() {
+      const windowTop = window.scrollY 
+      const windowBottom = window.scrollY + window.innerHeight
+      images.forEach(image => {
+        const imageMid = image.offsetTop + (image.height / 3)
+        if ((windowTop < imageMid) && (windowBottom > imageMid)) {
+          image.classList.add('active')
+        } else {
+          image.classList.remove('active')
+        }
+      });
+    }
+
+    window.addEventListener('scroll', debounce(checkImages))
+
   </script>
 
   <style>
